@@ -1,6 +1,10 @@
 package com.jayway.config;
 
 import com.jayway.repository.AccountRepository;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -19,15 +23,18 @@ import java.util.Properties;
 @Profile("mysql")
 @Configuration
 @EnableJpaRepositories("com.jayway.repository")
-public class MySqlRepositoryConfig implements RepositoryConfig {
+public class MySqlRepositoryConfig implements RepositoryConfig, ApplicationContextAware {
 
+    private ApplicationContext applicationContext;
+	
     @Bean
     @Override
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/spring_testing");
+        dataSource.setUrl("jdbc:mysql://mysql:3306/spring_testing");
         dataSource.setUsername("root");
+        dataSource.setPassword("password");
         return dataSource;
     }
 
@@ -53,4 +60,9 @@ public class MySqlRepositoryConfig implements RepositoryConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
+
+	@Override
+	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
+		applicationContext = arg0;
+	}
 }

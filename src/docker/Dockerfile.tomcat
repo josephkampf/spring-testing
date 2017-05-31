@@ -1,0 +1,20 @@
+FROM tomcat:8.5.15-jre8
+
+# Install base packages
+RUN apt-get update -y && \
+    apt-get install groovy vim -y
+
+COPY tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
+
+COPY context.xml  /usr/local/tomcat/webapps/host-manager/META-INF/context.xml
+
+COPY context.xml  /usr/local/tomcat/webapps/manager/META-INF/context.xml
+
+COPY context-global.xml /usr/local/tomcat/conf/context.xml
+
+COPY dbtest.groovy /usr/local/tomcat/
+
+ENV JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=27020,server=y,suspend=n"
+EXPOSE 27020
+
+COPY spring-testing-0.1-SNAPSHOT.war /usr/local/tomcat/webapps/spring-test.war

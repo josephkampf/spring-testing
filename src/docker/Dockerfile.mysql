@@ -1,0 +1,5 @@
+FROM mysql:5.7.18
+
+ENV MYSQL_DATABASE="spring_testing" MYSQL_ROOT_PASSWORD="password"
+
+ADD *.sql /docker-entrypoint-initdb.d/

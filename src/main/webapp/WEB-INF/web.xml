@@ -21,7 +21,7 @@
 
     <context-param>
         <param-name>spring.profiles.default</param-name>
-        <param-value>prod</param-value>
+        <param-value>docker</param-value>
     </context-param>
 
     <filter>
@@ -48,9 +48,9 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-
     <servlet-mapping>
         <servlet-name>bank</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    
 </web-app>

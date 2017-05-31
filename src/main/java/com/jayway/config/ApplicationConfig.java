@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan("com.jayway.service")
 @EnableTransactionManagement
-@Import({H2RepositoryConfig.class, MySqlRepositoryConfig.class, JndiRepositoryConfig.class})
+@Import({H2RepositoryConfig.class, MySqlRepositoryConfig.class, JndiRepositoryConfig.class, DockerRepositoryConfig.class})
 public class ApplicationConfig {}

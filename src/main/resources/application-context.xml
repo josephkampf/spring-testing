@@ -83,6 +83,31 @@
         </bean>
     </beans>
 
+    <beans profile="docker">
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://localhost:3306/spring_testing" />
+            <property name="username" value="root" />
+        </bean>
+
+        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="dataSource" ref="dataSource" />
+            <property name="packagesToScan" value="com.jayway.repository" />
+            <property name="jpaProperties">
+                <props>
+                    <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+                </props>
+            </property>
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                    <!--property name="showSql" value="true" /-->
+                    <!--property name="generateDdl" value="true" /-->
+                    <property name="database" value="MYSQL" />
+                </bean>
+            </property>
+        </bean>
+    </beans>
+
 
     <beans profile="prod">
         <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/myds" expected-type="javax.sql.DataSource"/>

@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  tomcat:
+    build:
+      context: .
+      dockerfile: Dockerfile.tomcat
+    ports:
+      - "8888:8080"
+      - "27020:27020"
+    depends_on:
+      - "mysql"
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    ports:
+      - "3306:3306"
+
