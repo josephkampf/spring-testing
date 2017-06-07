@@ -3,12 +3,12 @@ node {
     
     def rtMaven = Artifactory.newMavenBuild()
 
-	withEnv(["JAVA_HOME=${ tool 'java-8-openjdk' }", "PATH+MAVEN=${tool 'maven'}/bin:${env.JAVA_HOME}/bin"]) {
+	withEnv(["JAVA_HOME=/docker-java-home", "PATH+MAVEN=${tool 'Maven'}/bin:${env.JAVA_HOME}/bin"]) {
     	stage 'SCM'
         	git url: 'https://github.com/josephkampf/spring-testing.git'
 
     	stage 'Artifactory configuration'
-        	rtMaven.tool = 'maven' // Tool name from Jenkins configuration
+        	rtMaven.tool = 'Maven' // Tool name from Jenkins configuration
         	rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
         	rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
         	def buildInfo = Artifactory.newBuildInfo()
