@@ -1,5 +1,6 @@
 node {
-    def server = Artifactory.server 'artifactory'
+    def server = Artifactory.newServer url: 'http://artifactory:8081/artifactory', username: 'deployer', password: 'password'
+    
     def rtMaven = Artifactory.newMavenBuild()
 
 	withEnv(["JAVA_HOME=${ tool 'java-8-openjdk' }", "PATH+MAVEN=${tool 'maven'}/bin:${env.JAVA_HOME}/bin"]) {
@@ -16,10 +17,8 @@ node {
         	rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
 
         stage('SonarQube analysis') { 
-            withSonarQubeEnv('SonarQube') { 
-                sh 'mvn cobertura:cobertura sonar:sonar ' + 
-                ' -Dcobertura.report.format=xml'
-            }
+            sh 'mvn cobertura:cobertura sonar:sonar ' + 
+            ' -Dcobertura.report.format=xml -Dsonar.host.url=http://sonarqube:9000'
         }
 
     	stage 'Publish build info'
