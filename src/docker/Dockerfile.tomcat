@@ -17,4 +17,4 @@ COPY dbtest.groovy /usr/local/tomcat/
 ENV JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=27020,server=y,suspend=n"
 EXPOSE 27020
 
-COPY spring-testing-0.1-SNAPSHOT.war /usr/local/tomcat/webapps/spring-test.war
+COPY spring-test.war /usr/local/tomcat/webapps/spring-test.war
